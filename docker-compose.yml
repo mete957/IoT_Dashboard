@@ -53,6 +53,18 @@ services:
       - INFLUX_TOKEN=admin123
       - INFLUX_ORG=my_org
       - INFLUX_BUCKET=iot_data
+  simulator:
+    build:
+      context: ./python-service
+    command: python simulator.py
+    restart: unless-stopped
+    environment:
+      - MQTT_BROKER=mosquitto
+      - MQTT_PORT=1883
+      - SIM_TOPIC=test/topic
+      - SIM_INTERVAL=2
+    depends_on:
+      - mosquitto
 
 networks:
   default:
