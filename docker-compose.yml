@@ -16,12 +16,14 @@ services:
     ports:
       - "8086:8086"
     environment:
-      - INFLUXDB_ADMIN_USER=admin
-      - INFLUXDB_ADMIN_PASSWORD=admin123
-      - INFLUXDB_BUCKET=iot_data
-      - INFLUXDB_ORG=my_org
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=admin123
+      - DOCKER_INFLUXDB_INIT_ORG=my_org
+      - DOCKER_INFLUXDB_INIT_BUCKET=iot_data
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=admin123
     volumes:
-      - ./influxdb:/var/lib/influxdb2
+      - influxdb_data:/var/lib/influxdb2
 
   grafana:
     image: grafana/grafana:9.5.21
@@ -56,3 +58,6 @@ networks:
   default:
     name: iot-network
     driver: bridge
+
+volumes:
+  influxdb_data:
